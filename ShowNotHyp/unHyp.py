@@ -82,9 +82,9 @@ def foldAlong(edge):
   D0.joinTo(F0[3], D_1, glu)
 
 def firstBoundaryEdge(mfld,pred):
-  cpts = mfld.getBoundaryComponents()
+  cpts = mfld.boundaryComponents()
   for d in cpts:
-    n = d.getNumberOfEdges()
+    n = d.countEdges()
     for i in range(0,n):
       e = d.getEdge(i)
       if pred(e):
@@ -109,18 +109,18 @@ def possiblyT2xI(mfld):
   dno = m.countBoundaryComponents()
   if not (possiblyHyp(m) and dno == 2):
     return False
-  cpts = m.getBoundaryComponents()
+  cpts = m.boundaryComponents()
   for d in cpts:
     x = d.eulerChar()
     if x != 0:
       return False
-  H1 = m.getHomologyH1()
-  if not H1.toString() == '2 Z':
+  H1 = m.homologyH1()
+  if not H1.str() == '2 Z':
     return False
-  H2 = m.getHomologyH2()
+  H2 = m.homologyH2()
   if not H2.isZ():
     return False
-  H1R = m.getHomologyH1Rel()
+  H1R = m.homologyRel()
   if not H1R.isZ():
     return False
   return True
@@ -160,8 +160,8 @@ def isT2xI(regina_mfld):
     return False
   D = regina.NTriangulation(M)
   simplifyCusps(D)
-  T = D.getBoundaryComponent(1)
-  n = T.getNumberOfEdges()
+  T = D.boundaryComponent(1)
+  n = T.countEdges()
   assert n == 3
   for i in range(0,n):
     clone = regina.NTriangulation(D)
